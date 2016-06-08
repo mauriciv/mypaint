@@ -1,0 +1,16 @@
+environment:
+  matrix:
+    - MSYSTEM: MINGW64
+    - MSYSTEM: MINGW32
+
+init:
+  - set PATH=C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin
+  - pacman --noconfirm --sync --refresh --refresh --sysupgrade --sysupgrade
+
+install:
+  - bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/windows/msys2build.sh installdeps"
+
+build_script:
+  - bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/windows/msys2build.sh build"
+
+deploy: off
